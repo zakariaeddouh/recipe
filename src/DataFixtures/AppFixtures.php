@@ -6,8 +6,10 @@ use Faker\Factory;
 use Faker\Generator;
 use App\Entity\Recipe;
 use App\Entity\Ingredient;
+use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
@@ -53,6 +55,21 @@ class AppFixtures extends Fixture
             $recipes[] = $recipe;
             $manager->persist($recipe);
         }
+
+        // Users
+        $users = [];
+        for ($i = 0; $i < 10; $i++) {
+            $user = new User();
+            $user->setFullName($this->faker->name())
+                ->setPseudo(mt_rand(0, 1) === 1 ? $this->faker->firstName() : null)
+                ->setEmail($this->faker->email())
+                ->setRoles(['ROLE_USER'])
+                ->setPlainPassword('password');
+
+            $users[] = $user;
+            $manager->persist($user);
+        }
+
 
         $manager->flush();
     }
