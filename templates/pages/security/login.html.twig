@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SymRecipe - Connexion
+{% block title %}
+	SymRecipe - Connexion
 {% endblock %}
 
 {% block body %}
@@ -19,7 +20,7 @@
 			</div>
 		{% endif %}
 
-		<form action="{{ path('app_login') }}" method="post" name="login">
+		<form action="{{ path('security_login') }}" method="post" name="login">
 			<div class="form-group">
 				<label for="username" class="form-label mt-4">Adresse email</label>
 				<input type="email" class="form-control" id="username" name="_username" placeholder="exemple@symrecipe.fr" value="{{ last_username }}">
