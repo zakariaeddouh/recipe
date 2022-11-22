@@ -60,8 +60,8 @@ class SecurityController extends AbstractController
         $user->setRoles(['ROLE_USER']);
 
         $form = $this->createForm(RegistrationType::class, $user);
+        
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
 

@@ -36,8 +36,8 @@
 						<li class="nav-item dropdown" style="margin-right: 5rem;">
 							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.fullName }}</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="{{ path('home_index', {id : app.user.id}) }}">Modifier mes informations</a>
-								<a class="dropdown-item" href="{{ path('home_index', {id : app.user.id}) }}">Modifier mon mot de passe</a>
+								<a class="dropdown-item" href="{{ path('user_edit', {id : app.user.id}) }}">Modifier mes informations</a>
+								<a class="dropdown-item" href="{{ path('user_edit_password', {id : app.user.id}) }}">Modifier mon mot de passe</a>
 								<div class="dropdown-divider"></div>
 								{% if 'ROLE_ADMIN' in app.user.roles %}
 									<a class="dropdown-item" href="{{ path('home_index') }}">Administration</a>
