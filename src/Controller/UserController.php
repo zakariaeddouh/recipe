@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserController extends AbstractController
 {
@@ -18,24 +19,25 @@ class UserController extends AbstractController
      * This controller allow us to edit user's profile
      *
      * @param Request $request
-     * @param User $user
+     * @param User $choosenUser
      * @param EntityManagerInterface $manager
      * @param UserPasswordHasherInterface $hasher
      * @return Response
      */
+    #[Security("is_granted('ROLE_USER') and user === choosenUser")]
     #[Route('/user/edit/{id}', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
-        User $user,
+        User $choosenUser,
         EntityManagerInterface $manager,
         UserPasswordHasherInterface $hasher
     ): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $choosenUser);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($hasher->isPasswordValid($user, $form->getData()->getPlainPassword())) {
+            if ($hasher->isPasswordValid($choosenUser, $form->getData()->getPlainPassword())) {
                 $user = $form->getData();
 
                 $this->addFlash(
@@ -64,14 +66,15 @@ class UserController extends AbstractController
      * This controller allow us to edit user's password
      *
      * @param User $user
-     * @param Request $request
+     * @param Request $choosenUser
      * @param EntityManagerInterface $manager
      * @param UserPasswordHasherInterface $hasher
      * @return Response
      */
+    #[Security("is_granted('ROLE_USER') and user === choosenUser")]
     #[Route('/user/edit-password/{id}', 'user_edit_password', methods: ['GET', 'POST'])]
     public function editPassword(
-        User $user,
+        User $choosenUser,
         Request $request,
         EntityManagerInterface $manager,
         UserPasswordHasherInterface $hasher
@@ -80,9 +83,9 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($hasher->isPasswordValid($user, $form->getData()['plainPassword'])) {
-                $user->setUpdatedAt(new \DateTimeImmutable());
-                $user->setPlainPassword(
+            if ($hasher->isPasswordValid($choosenUser, $form->getData()['plainPassword'])) {
+                $choosenUser->setUpdatedAt(new \DateTimeImmutable());
+                $choosenUser->setPlainPassword(
                     $form->getData()['newPassword']
                 );
 
@@ -91,7 +94,7 @@ class UserController extends AbstractController
                     'Le mot de passe a été modifié.'
                 );
 
-                $manager->persist($user);
+                $manager->persist($choosenUser);
                 $manager->flush();
 
                 return $this->redirectToRoute('recipe_index');
