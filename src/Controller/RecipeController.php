@@ -43,6 +43,32 @@ class RecipeController extends AbstractController
     }
 
     /**
+     * Undocumented function
+     *
+     * @param RecipeRepository $repository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
+     */
+    #[Route('/recipe/community', 'recipe_community', methods: ['GET'])]
+    public function community(
+        RecipeRepository $repository,
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response
+    {
+        $recipes = $paginator->paginate(
+            $repository->findPublicRecipe(null),
+            $request->query->getInt('page', 1),
+            10
+        );
+        
+        return $this->render('pages/recipe/community.html.twig', [
+            'recipes' => $recipes
+        ]);
+    }
+
+    /**
      * This controller display all recipes
      *
      * @param Request $request
@@ -140,5 +166,18 @@ class RecipeController extends AbstractController
         return $this->redirectToRoute('recipe_index');
     }
 
-
+    /**
+     * This controller allow us to see a recipe if this one is public
+     *
+     * @param Recipe $recipe
+     * @return Response
+     */
+    #[Security("is_granted('ROLE_USER') and recipe.isIsPublic()")]
+    #[Route('/recipe/{id}', 'recipe_show', methods: ['GET'])]
+    public function show(Recipe $recipe): Response
+    {
+        return $this->render('pages/recipe/show.html.twig', [
+            'recipe' => $recipe
+        ]);
+    }
 }
