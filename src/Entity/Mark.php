@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\MarkRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MarkRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[UniqueEntity(
-
+    fields: ['user', 'recipe'],
+    errorPath: 'user',
+    message: 'Cet utilisateur a déjà noté cette recette.'
 )]
 #[ORM\Entity(repositoryClass: MarkRepository::class)]
 class Mark

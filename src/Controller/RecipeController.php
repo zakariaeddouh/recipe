@@ -137,7 +137,7 @@ class RecipeController extends AbstractController
                 'Votre recette a été modifié avec succès !'
             );
 
-            return $this->redirectToRoute('recipe.index');
+            return $this->redirectToRoute('recipe_index');
         }
 
         return $this->render('pages/recipe/edit.html.twig', [
@@ -175,7 +175,7 @@ class RecipeController extends AbstractController
      * @param Recipe $recipe
      * @return Response
      */
-    #[Security("is_granted('ROLE_USER') and recipe.isIsPublic()")]
+    #[Security("is_granted('ROLE_USER') and (recipe.getIsPublic() === true || user === recipe.getUser())")]
     #[Route('/recipe/{id}', 'recipe_show', methods: ['GET', 'POST'])]
     public function show(
         Recipe $recipe,
