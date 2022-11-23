@@ -57,12 +57,12 @@ class IngredientController extends AbstractController
     ): Response {
         $ingredient = new Ingredient();
         $form = $this->createForm(IngredientType::class, $ingredient);
-        $form->handleRequest($request);
 
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $ingredient = $form->getData();
             $ingredient->setUser($this->getUser());
-
+            
             $manager->persist($ingredient);
             $manager->flush();
 
@@ -95,8 +95,8 @@ class IngredientController extends AbstractController
         Ingredient $ingredient
     ): Response {
         $form = $this->createForm(IngredientType::class, $ingredient);
-        $form->handleRequest($request);
 
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $ingredient = $form->getData();
 

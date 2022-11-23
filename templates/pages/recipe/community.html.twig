@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}SymRecipe - Recettes de la communauté
+{% block title %}
+	SymRecipe - Recettes de la communauté
 {% endblock %}
 
 {% block body %}
 	<div class="container mt-4">
 		{% if not recipes.items is same as([]) %}
 			<h1>Recettes de la communuaté</h1>
-
 			<div class="d-flex justify-content-center flex-wrap">
 				{% for recipe in recipes %}
-					<div class="card border-primary mb-3" style="max-width: 20rem;">
+					<div class="card border-primary mb-3 mx-2" style="max-width: 20rem;">
 						<div class="card-header">Recette n°{{ recipe.id }}</div>
 						<div class="card-body">
 							<h4 class="card-title">
@@ -21,8 +21,6 @@
 					</div>
 				{% endfor %}
 			</div>
-
-
 		{% else %}
 			<h4>Il n'y a pas de rcettes</h4>
 		{% endif %}
