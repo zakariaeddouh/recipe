@@ -58,8 +58,7 @@ class RecipeController extends AbstractController
         RecipeRepository $repository,
         PaginatorInterface $paginator,
         Request $request
-    ): Response
-    {
+    ): Response {
         $recipes = $paginator->paginate(
             $repository->findPublicRecipe(null),
             $request->query->getInt('page', 1),
@@ -86,8 +85,8 @@ class RecipeController extends AbstractController
     ): Response {
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
-        $form->handleRequest($request);
 
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
             $recipe->setUser($this->getUser());
@@ -124,8 +123,8 @@ class RecipeController extends AbstractController
         EntityManagerInterface $manager
     ): Response {
         $form = $this->createForm(RecipeType::class, $recipe);
-        $form->handleRequest($request);
 
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $recipe = $form->getData();
 
@@ -169,14 +168,17 @@ class RecipeController extends AbstractController
         return $this->redirectToRoute('recipe_index');
     }
 
+    #[Security("is_granted('ROLE_USER') and (recipe.getIsPublic() === true || user === recipe.getUser())")]
+    #[Route('/recipe/{id}', 'recipe_show', methods: ['GET', 'POST'])]
     /**
      * This controller allow us to see a recipe if this one is public
      *
      * @param Recipe $recipe
+     * @param Request $request
+     * @param MarkRepository $repository
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    #[Security("is_granted('ROLE_USER') and (recipe.getIsPublic() === true || user === recipe.getUser())")]
-    #[Route('/recipe/{id}', 'recipe_show', methods: ['GET', 'POST'])]
     public function show(
         Recipe $recipe,
         Request $request,

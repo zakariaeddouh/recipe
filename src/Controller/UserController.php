@@ -31,8 +31,7 @@ class UserController extends AbstractController
         User $choosenUser,
         EntityManagerInterface $manager,
         UserPasswordHasherInterface $hasher
-    ): Response
-    {
+    ): Response {
         $form = $this->createForm(UserType::class, $choosenUser);
 
         $form->handleRequest($request);

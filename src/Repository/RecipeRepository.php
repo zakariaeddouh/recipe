@@ -39,6 +39,12 @@ class RecipeRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * This function find public recipe
+     *
+     * @param integer|null $nbRecipes
+     * @return array
+     */
     public function findPublicRecipe(?int $nbRecipes): array
     {
         $QueryBuilder = $this->createQueryBuilder('r')
