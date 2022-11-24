@@ -4,10 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +17,7 @@ class ContactController extends AbstractController
     public function index(
         Request $request,
         EntityManagerInterface $manager,
-        MailerInterface $mailer
+        MailService $mailService
     ): Response {
         $contact = new Contact();
 
@@ -36,15 +35,12 @@ class ContactController extends AbstractController
             $manager->persist($contact);
             $manager->flush();
 
-            //Email
-            $email = (new Email())
-                ->from($contact->getEmail())
-                ->to('admin@recipe.com')
-                ->subject($contact->getSubject())
-                ->text('Sending emails is fun again!')
-                ->html('<p>See Twig integration for better HTML integration!</p>');
-
-            $mailer->send($email);
+            $mailService->sendMail(
+                $contact->getEmail(),
+                $contact->getSubject(),
+                'emails/contact.html.twig',
+                ['contact' => $contact]
+            );
 
             $this->addFlash(
                 'success',
