@@ -39,4 +39,23 @@ class IngredientTest extends WebTestCase
 
         $this->assertRouteSame('ingredient.index');
     }
+
+    public function testIfListingredientIsSuccessful(): void
+    {
+        $client = static::createClient();
+
+        $urlGenerator = $client->getContainer()->get('router');
+
+        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $user = $entityManager->find(User::class, 1);
+
+        $client->loginUser($user);
+
+        $client->request(Request::METHOD_GET, $urlGenerator->generate('ingredient.index'));
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertRouteSame('ingredient.index');
+    }
 }
