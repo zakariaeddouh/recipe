@@ -58,4 +58,41 @@ class IngredientTest extends WebTestCase
 
         $this->assertRouteSame('ingredient.index');
     }
+
+    public function testIfUpdateAnIngredientIsSuccessfull(): void
+    {
+        $client = static::createClient();
+
+        $urlGenerator = $client->getContainer()->get('router');
+        $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $user = $entityManager->find(User::class, 1);
+        $ingredient = $entityManager->getRepository(Ingredient::class)->findOneBy([
+            'user' => $user
+        ]);
+
+        $client->loginUser($user);
+
+        $crawler = $client->request(
+            Request::METHOD_GET,
+            $urlGenerator->generate('ingredient.edit', ['id' => $ingredient->getId()])
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $form = $crawler->filter('form[name=ingredient]')->form([
+            'ingredient[name]' => "Un ingrédient 2",
+            'ingredient[price]' => floatval(34)
+        ]);
+
+        $client->submit($form);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+
+        $client->followRedirect();
+
+        $this->assertSelectorTextContains('div.alert-success', 'Votre ingrédient a été modifié avec succès !');
+
+        $this->assertRouteSame('ingredient.index');
+    }
 }
