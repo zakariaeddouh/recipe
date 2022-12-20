@@ -64,7 +64,7 @@ class ContactType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'label' => 'Description',
+                'label' => 'Message',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
@@ -74,7 +74,7 @@ class ContactType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4'
+                    'class' => 'btn btn-outline-primary mt-4'
                 ],
                 'label' => 'Soumettre ma demande'
             ])
