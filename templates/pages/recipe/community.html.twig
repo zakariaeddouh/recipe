@@ -7,19 +7,30 @@
 {% block body %}
 	<div class="container mt-4">
 		{% if not recipes.items is same as([]) %}
-			<h1>Recettes de la communuaté</h1>
-			<div class="d-flex justify-content-center flex-wrap">
+			<h2>Recettes de la communuaté</h2>
+			<div class="d-flex justify-content-center flex-wrap mt-4">
 				{% for recipe in recipes %}
-					<div class="card border-primary mb-3 mx-2" style="max-width: 20rem;">
-						<div class="card-header">Recette n°{{ recipe.id }}</div>
+					<div class="card mb-3 mx-2 spa-23" style="max-width: 18rem;">
+						{% if recipe.imageName %}
+							<img src="/images/recipe/{{recipe.imageName}}" class="card-img-top fixed-img" alt="...">
+						{% else %}
+							<img src="/images/default/recette-img.png" class="card-img-top fixed-img" alt="...">
+						{% endif %}
 						<div class="card-body">
-							<h4 class="card-title">
-								<a href="{{ path('recipe_show', {id: recipe.id}) }}">{{ recipe.name }}</a>
-							</h4>
-							<p class="card-text">{{ recipe.description|slice(0, 100) ~ '...' }}</p>
+							<h5 class="card-title">
+								<a class="form-text text-decoration-none" href="{{ path('recipe_show', {id: recipe.id}) }}">{{ recipe.name }}</a>
+							</h5>
+							<p class="form-text card-text">{{ recipe.description|slice(0, 100) ~ '...' }}</p>
+						</div>
+						<div class="card-footer form-text text-muted text-center">
+							Créée le
+							{{ recipe.createdAt|date('d/m/Y') }}
 						</div>
 					</div>
 				{% endfor %}
+			</div>
+			<div class="navigation d-flex justify-content-center mt-4">
+				{{ knp_pagination_render(recipes) }}
 			</div>
 		{% else %}
 			<h4>Il n'y a pas de rcettes</h4>

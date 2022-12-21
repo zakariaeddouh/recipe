@@ -1,3 +1,16 @@
 body {
     background-color: lightgray;
 }
+
+.fixed-img {
+    height: 12vw;
+    object-fit: cover;
+}
+
+.spa-23 {
+    width: 23%;
+}
+
+.width-img-infos {
+    width: 85%;
+}

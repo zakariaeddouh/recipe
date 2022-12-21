@@ -18,16 +18,6 @@
 					<a class="nav-link" href="{{ path('contact_index') }}">Contact
 					</a>
 				</li>
-				{% if app.user %}
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('ingredient_index') }}">Mes ingrédients
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('recipe_index') }}">Mes recettes
-						</a>
-					</li>
-				{% endif %}
 			</ul>
 			<div class="d-flex">
 				<ul class="navbar-nav me-auto">
@@ -35,8 +25,11 @@
 						<li class="nav-item dropdown" style="margin-right: 5rem;">
 							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.fullName }}</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="{{ path('user_edit', {id : app.user.id}) }}">Modifier mes informations</a>
+								<a class="dropdown-item" href="{{ path('ingredient_index') }}">Mes ingrédients</a>
+								<a class="dropdown-item" href="{{ path('recipe_index') }}">Mes recettes</a>
+								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="{{ path('user_edit_password', {id : app.user.id}) }}">Modifier mon mot de passe</a>
+								<a class="dropdown-item" href="{{ path('user_edit', {id : app.user.id}) }}">Modifier mes informations</a>
 								<div class="dropdown-divider"></div>
 								{% if 'ROLE_ADMIN' in app.user.roles %}
 									<a class="dropdown-item" href="{{ path('admin') }}">Administration</a>

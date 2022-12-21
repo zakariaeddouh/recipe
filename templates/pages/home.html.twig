@@ -1,30 +1,41 @@
 {% extends "base.html.twig" %}
 
-{% block title %} 
-	SymRecipe - Accueil 
+{% block title %}
+	SymRecipe - Accueil
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-4">
+	<div class="container mt-3">
 		<div class="jumbotron">
 			<h1 class="display-4">Bienvenue sur SymRecipe</h1>
 			<p class="lead">SymRecipe est une application qui va te permettre de créer des recettes à base d'ingrédients que tu auras toi-même créer. Tu pourras partager tes recettes à la communauté du site, ou bien les garder en privées.</p>
 			<hr class="my-4">
-			<p>Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application.</p>
-			<a class="btn btn-primary btn-lgz" href="{{ path('security_registration') }}" role="button">Inscription</a>
+			{% if not app.user %}
+				<p>Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application.</p>
+				<a class="btn btn-primary btn-lgz" href="{{ path('security_registration') }}" role="button">Inscription</a>
+				<hr class="my-4">
+			{% endif %}
 		</div>
 
 		<div class="recipes">
 			<h2 class="mt-4">Recettes de la communauté</h2>
 			<div class="d-flex justify-content-between">
 				{% for recipe in recipes %}
-					<div class="card border-primary mb-3 mx-2" style="max-width: 20rem;">
-						<div class="card-header">Recette n°{{ recipe.id }}</div>
+					<div class="card mb-3 mx-2" style="max-width: 18rem;">
+						{% if recipe.imageName %}
+							<img src="/images/recipe/{{recipe.imageName}}" class="card-img-top fixed-img" alt="...">
+						{% else %}
+							<img src="/images/default/recette-img.png" class="card-img-top fixed-img" alt="...">
+						{% endif %}
 						<div class="card-body">
-							<h4 class="card-title">
-								<a href="{{ path('recipe_show', {id: recipe.id}) }}">{{ recipe.name }}</a>
-							</h4>
-							<p class="card-text">{{ recipe.description|slice(0, 100) ~ '...' }}</p>
+							<h5 class="card-title">
+								<a class="form-text text-decoration-none" href="{{ path('recipe_show', {id: recipe.id}) }}">{{ recipe.name }}</a>
+							</h5>
+							<p class="form-text card-text">{{ recipe.description|slice(0, 100) ~ '...' }}</p>
+						</div>
+						<div class="card-footer form-text text-muted text-center">
+							Créée le
+							{{ recipe.createdAt|date('d/m/Y') }}
 						</div>
 					</div>
 				{% endfor %}
