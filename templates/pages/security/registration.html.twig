@@ -11,8 +11,11 @@
 				<img src="/images/default/login-img.png">
 			</div>
 			<div class="col">
-				<h1 class="mt-4">Rejoignez SymRecipe</h1>
+				<h2 class="mt-4">Rejoignez SymRecipe</h2>
 				{{ form(form) }}
+				<div class="form-text text-muted mt-2">Vous avez déjà un compte
+				<a href="{{ path('security_login') }}" class="text-decoration-none">connexion</a>
+			</div>
 			</div>
 		</div>
 	</div>

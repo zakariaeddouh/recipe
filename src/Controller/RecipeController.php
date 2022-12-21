@@ -70,7 +70,7 @@ class RecipeController extends AbstractController
         $recipes = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
-            10
+            4
         );
         
         return $this->render('pages/recipe/community.html.twig', [
