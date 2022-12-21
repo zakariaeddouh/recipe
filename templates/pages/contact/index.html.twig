@@ -6,8 +6,8 @@
 {% block body %}
 	<div class="container mt-4">
 		<div class="row mt-4">
-			<div class="col">
-				<img src="/images/default/img-contact.png">
+			<div class="col mt-5">
+				<img src="/images/default/support-img.png">
 			</div>
 			<div class="col">
 				{% for message in app.flashes('success') %}
@@ -22,7 +22,7 @@
 					</div>
 				{% endfor %}
 
-				<h1>Entrer en contact</h1>
+				<h1 class="mt-4">Entrer en contact</h1>
 				{{ form(form) }}
 			</div>
 		</div>

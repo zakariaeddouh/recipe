@@ -5,8 +5,15 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<h1 class="mt-4">Formulaire d'inscription</h1>
-		{{ form(form) }}
+	<div class="container mt-4">
+		<div class="row mt-4">
+			<div class="col mt-5">
+				<img src="/images/default/login-img.png">
+			</div>
+			<div class="col">
+				<h1 class="mt-4">Rejoignez SymRecipe</h1>
+				{{ form(form) }}
+			</div>
+		</div>
 	</div>
 {% endblock %}
