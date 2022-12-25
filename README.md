@@ -4,12 +4,12 @@
 2. [Technologies](#technologies)
 3. [Installation](#installation)
 4. [Getting started](#getting-started)
+5. [Contributing](#contributing)
 
 ## General informations
 
-Project author : Zakaria Eddouh
-
-Date : November 2022
+- Project author : Zakaria Eddouh
+- Date : November 2022
 
 ## Technologies
 
@@ -73,4 +73,14 @@ Your site is now accessible at the following address
 
 ## Getting started
 
-Once the project is installed, you can log in to the administration area using the following mail `admin@symrecipe.fr` and password `password` by following the `Login` link in the top right menu .
+Once the project is installed, you can log in to the administration area using the following mail `admin@symrecipe.fr` and password `password` by following the `Login` link in the top right menu.
+
+## Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](issues/).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
